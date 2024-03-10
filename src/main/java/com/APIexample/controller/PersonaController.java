@@ -1,0 +1,49 @@
+package com.APIexample.controller;
+
+import com.APIexample.dto.PersonaDTO;
+import com.APIexample.model.Persona;
+import com.APIexample.service.PersonaService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+
+@RestController
+public class PersonaController {
+
+    @Autowired
+    private PersonaService personaService;
+
+    @GetMapping("/personas")
+    @ResponseBody
+    public List<Persona> listarPersonass() {
+        return personaService.listarPersonas();
+    }
+
+    @PostMapping("/persona")
+    @ResponseBody
+    public Persona crearPersona(@RequestBody Persona persona) {
+        return personaService.crearPersona(persona);
+    }
+
+    @DeleteMapping("/persona/{id}")
+    public void borrarPersona(@PathVariable Long id) {
+        personaService.borrarPersona(id);
+    }
+
+    @GetMapping("/persona/{id}")
+    @ResponseBody
+    public Persona buscarPersonaPorId(@PathVariable Long id) {
+        return personaService.buscarPersonaPorId(id);
+    }
+
+    @PutMapping("/persona")
+    public void modificarPersona(@RequestBody Persona persona) {
+        personaService.modificarPersona(persona);
+    }
+
+    @PostMapping("/login")
+    public PersonaDTO login (@RequestBody Persona persona) {
+        return personaService.login(persona.getUser(), persona.getPassword());
+    }
+}
